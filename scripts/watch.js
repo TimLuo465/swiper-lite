@@ -7,9 +7,6 @@ import buildJsBundle from './build-js-bundle.js';
 import buildTypes from './build-types.js';
 import buildStyles from './build-styles.js';
 import buildReact from './build-react.js';
-import buildVue from './build-vue.js';
-import buildSolid from './build-solid.js';
-import buildSvelte from './build-svelte.js';
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 console.log(chalk.cyan('Watching file changes ...'));
@@ -28,21 +25,6 @@ const watchFunction = async (fileName) => {
   if (fileName.includes('react')) {
     console.log('Building React');
     buildReact('build');
-    return;
-  }
-  if (fileName.includes('vue')) {
-    console.log('Building Vue');
-    buildVue('build');
-    return;
-  }
-  if (fileName.includes('solid')) {
-    console.log('Building Solid');
-    buildSolid('build');
-    return;
-  }
-  if (fileName.includes('svelte')) {
-    console.log('Building Svelte');
-    buildSvelte('build');
     return;
   }
   if (fileName.includes('.js')) {
