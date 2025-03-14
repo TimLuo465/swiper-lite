@@ -1,5 +1,3 @@
-import { animateCSSModeScroll } from '../../shared/utils.js';
-
 export default function translateTo(
   translate = 0,
   speed = this.params.speed,
@@ -9,7 +7,7 @@ export default function translateTo(
 ) {
   const swiper = this;
 
-  const { params, wrapperEl } = swiper;
+  const { params } = swiper;
 
   if (swiper.animating && params.preventInteractionOnTransition) {
     return false;
@@ -24,23 +22,6 @@ export default function translateTo(
 
   // Update progress
   swiper.updateProgress(newTranslate);
-
-  if (params.cssMode) {
-    const isH = swiper.isHorizontal();
-    if (speed === 0) {
-      wrapperEl[isH ? 'scrollLeft' : 'scrollTop'] = -newTranslate;
-    } else {
-      if (!swiper.support.smoothScroll) {
-        animateCSSModeScroll({ swiper, targetPosition: -newTranslate, side: isH ? 'left' : 'top' });
-        return true;
-      }
-      wrapperEl.scrollTo({
-        [isH ? 'left' : 'top']: -newTranslate,
-        behavior: 'smooth',
-      });
-    }
-    return true;
-  }
 
   if (speed === 0) {
     swiper.setTransition(0);

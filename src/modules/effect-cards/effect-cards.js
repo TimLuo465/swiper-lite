@@ -23,14 +23,11 @@ export default function EffectCards({ swiper, extendParams, on }) {
       const $slideEl = slides.eq(i);
       const slideProgress = $slideEl[0].progress;
       const progress = Math.min(Math.max(slideProgress, -4), 4);
-      let offset = $slideEl[0].swiperSlideOffset;
-      if (swiper.params.centeredSlides && !swiper.params.cssMode) {
+      const offset = $slideEl[0].swiperSlideOffset;
+      if (swiper.params.centeredSlides) {
         swiper.$wrapperEl.transform(`translateX(${swiper.minTranslate()}px)`);
       }
-      if (swiper.params.centeredSlides && swiper.params.cssMode) {
-        offset -= slides[0].swiperSlideOffset;
-      }
-      let tX = swiper.params.cssMode ? -offset - swiper.translate : -offset;
+      let tX = -offset;
       let tY = 0;
       const tZ = -100 * Math.abs(progress);
       let scale = 1;
@@ -45,13 +42,13 @@ export default function EffectCards({ swiper, extendParams, on }) {
         (slideIndex === activeIndex || slideIndex === activeIndex - 1) &&
         progress > 0 &&
         progress < 1 &&
-        (isTouched || swiper.params.cssMode) &&
+        isTouched &&
         currentTranslate < startTranslate;
       const isSwipeToPrev =
         (slideIndex === activeIndex || slideIndex === activeIndex + 1) &&
         progress < 0 &&
         progress > -1 &&
-        (isTouched || swiper.params.cssMode) &&
+        isTouched &&
         currentTranslate > startTranslate;
 
       if (isSwipeToNext || isSwipeToPrev) {
@@ -119,7 +116,7 @@ export default function EffectCards({ swiper, extendParams, on }) {
     perspective: () => true,
     overwriteParams: () => ({
       watchSlidesProgress: true,
-      virtualTranslate: !swiper.params.cssMode,
+      virtualTranslate: true,
     }),
   });
 }

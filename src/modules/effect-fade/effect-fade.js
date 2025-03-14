@@ -53,7 +53,7 @@ export default function EffectFade({ swiper, extendParams, on }) {
       slidesPerGroup: 1,
       watchSlidesProgress: true,
       spaceBetween: 0,
-      virtualTranslate: !swiper.params.cssMode,
+      virtualTranslate: true,
     }),
   });
 }

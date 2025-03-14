@@ -179,10 +179,6 @@ export default function Mousewheel({ swiper, extendParams, on, emit }) {
     if (!swiper.enabled) return;
     const params = swiper.params.mousewheel;
 
-    if (swiper.params.cssMode) {
-      e.preventDefault();
-    }
-
     let target = swiper.$el;
     if (swiper.params.mousewheel.eventsTarget !== 'container') {
       target = $(swiper.params.mousewheel.eventsTarget);
@@ -398,20 +394,12 @@ export default function Mousewheel({ swiper, extendParams, on, emit }) {
   }
 
   function enable() {
-    if (swiper.params.cssMode) {
-      swiper.wrapperEl.removeEventListener('wheel', handle);
-      return true;
-    }
     if (swiper.mousewheel.enabled) return false;
     events('on');
     swiper.mousewheel.enabled = true;
     return true;
   }
   function disable() {
-    if (swiper.params.cssMode) {
-      swiper.wrapperEl.addEventListener(event, handle);
-      return true;
-    }
     if (!swiper.mousewheel.enabled) return false;
     events('off');
     swiper.mousewheel.enabled = false;
@@ -419,15 +407,9 @@ export default function Mousewheel({ swiper, extendParams, on, emit }) {
   }
 
   on('init', () => {
-    if (!swiper.params.mousewheel.enabled && swiper.params.cssMode) {
-      disable();
-    }
     if (swiper.params.mousewheel.enabled) enable();
   });
   on('destroy', () => {
-    if (swiper.params.cssMode) {
-      enable();
-    }
     if (swiper.mousewheel.enabled) disable();
   });
 

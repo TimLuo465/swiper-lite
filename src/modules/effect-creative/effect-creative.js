@@ -60,7 +60,7 @@ export default function EffectCreative({ swiper, extendParams, on }) {
       }
 
       const offset = $slideEl[0].swiperSlideOffset;
-      const t = [swiper.params.cssMode ? -offset - swiper.translate : -offset, 0, 0];
+      const t = [-offset, 0, 0];
       const r = [0, 0, 0];
       let custom = false;
       if (!swiper.isHorizontal()) {
@@ -144,7 +144,7 @@ export default function EffectCreative({ swiper, extendParams, on }) {
     perspective: () => swiper.params.creativeEffect.perspective,
     overwriteParams: () => ({
       watchSlidesProgress: true,
-      virtualTranslate: !swiper.params.cssMode,
+      virtualTranslate: true,
     }),
   });
 }

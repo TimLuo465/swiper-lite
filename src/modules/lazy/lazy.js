@@ -291,12 +291,8 @@ export default function Lazy({ swiper, extendParams, on, emit }) {
     }
   });
   on('slideChange', () => {
-    const { lazy, cssMode, watchSlidesProgress, touchReleaseOnEdges, resistanceRatio } =
-      swiper.params;
-    if (
-      lazy.enabled &&
-      (cssMode || (watchSlidesProgress && (touchReleaseOnEdges || resistanceRatio === 0)))
-    ) {
+    const { lazy, watchSlidesProgress, touchReleaseOnEdges, resistanceRatio } = swiper.params;
+    if (lazy.enabled && watchSlidesProgress && (touchReleaseOnEdges || resistanceRatio === 0)) {
       load();
     }
   });

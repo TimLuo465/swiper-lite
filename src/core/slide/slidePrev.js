@@ -19,19 +19,7 @@ export default function slidePrev(speed = this.params.speed, runCallbacks = true
   const normalizedTranslate = normalize(translate);
   const normalizedSnapGrid = snapGrid.map((val) => normalize(val));
 
-  let prevSnap = snapGrid[normalizedSnapGrid.indexOf(normalizedTranslate) - 1];
-  if (typeof prevSnap === 'undefined' && params.cssMode) {
-    let prevSnapIndex;
-    snapGrid.forEach((snap, snapIndex) => {
-      if (normalizedTranslate >= snap) {
-        // prevSnap = snap;
-        prevSnapIndex = snapIndex;
-      }
-    });
-    if (typeof prevSnapIndex !== 'undefined') {
-      prevSnap = snapGrid[prevSnapIndex > 0 ? prevSnapIndex - 1 : prevSnapIndex];
-    }
-  }
+  const prevSnap = snapGrid[normalizedSnapGrid.indexOf(normalizedTranslate) - 1];
   let prevIndex = 0;
   if (typeof prevSnap !== 'undefined') {
     prevIndex = slidesGrid.indexOf(prevSnap);

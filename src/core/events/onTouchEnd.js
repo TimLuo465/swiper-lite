@@ -72,10 +72,6 @@ export default function onTouchEnd(event) {
     currentPos = -data.currentTranslate;
   }
 
-  if (params.cssMode) {
-    return;
-  }
-
   if (swiper.params.freeMode && params.freeMode.enabled) {
     swiper.freeMode.onTouchEnd({ currentPos });
     return;

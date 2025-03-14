@@ -1,5 +1,4 @@
 /* eslint no-param-reassign: "off" */
-import { getDocument } from 'ssr-window';
 import $ from '../shared/dom.js';
 import { extend, now, deleteProps } from '../shared/utils.js';
 import { getSupport } from '../shared/get-support.js';
@@ -18,7 +17,6 @@ import slide from './slide/index.js';
 import loop from './loop/index.js';
 import grabCursor from './grab-cursor/index.js';
 import events from './events/index.js';
-import breakpoints from './breakpoints/index.js';
 import classes from './classes/index.js';
 import images from './images/index.js';
 import checkOverflow from './check-overflow/index.js';
@@ -35,7 +33,6 @@ const prototypes = {
   loop,
   grabCursor,
   events,
-  breakpoints,
   checkOverflow,
   classes,
   images,
@@ -351,10 +348,7 @@ class Swiper {
     const swiper = this;
     if (!swiper || swiper.destroyed) return;
     const { snapGrid, params } = swiper;
-    // Breakpoints
-    if (params.breakpoints) {
-      swiper.setBreakpoint();
-    }
+
     swiper.updateSize();
     swiper.updateSlides();
     swiper.updateProgress();
@@ -477,16 +471,10 @@ class Swiper {
       return $el.children(getWrapperSelector());
     };
     // Find Wrapper
-    let $wrapperEl = getWrapper();
-    if ($wrapperEl.length === 0 && swiper.params.createElements) {
-      const document = getDocument();
-      const wrapper = document.createElement('div');
-      $wrapperEl = $(wrapper);
-      wrapper.className = swiper.params.wrapperClass;
-      $el.append(wrapper);
-      $el.children(`.${swiper.params.slideClass}`).each((slideEl) => {
-        $wrapperEl.append(slideEl);
-      });
+    const $wrapperEl = getWrapper();
+    if ($wrapperEl.length === 0) {
+      console.error('Wrapper not found');
+      return false;
     }
 
     Object.assign(swiper, {
@@ -515,11 +503,6 @@ class Swiper {
     if (mounted === false) return swiper;
 
     swiper.emit('beforeInit');
-
-    // Set breakpoint
-    if (swiper.params.breakpoints) {
-      swiper.setBreakpoint();
-    }
 
     // Add Classes
     swiper.addClasses();

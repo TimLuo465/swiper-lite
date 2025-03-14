@@ -8,9 +8,6 @@ export default function getSwiperTranslate(axis = this.isHorizontal() ? 'x' : 'y
   if (params.virtualTranslate) {
     return rtl ? -translate : translate;
   }
-  if (params.cssMode) {
-    return translate;
-  }
 
   let currentTranslate = getTranslate($wrapperEl[0], axis);
   if (rtl) currentTranslate = -currentTranslate;

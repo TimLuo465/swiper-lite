@@ -132,7 +132,6 @@
       (slideChange)="log('slideChange')"
       [slidesPerView]="3"
       [spaceBetween]="50"
-      [breakpoints]="breakpoints"
       [scrollbar]="scrollbar"
       [loop]="true"
       [pagination]="{ el: '.swiper-pagination.pagination-test' }"
@@ -152,7 +151,6 @@
     <button (click)="slides.push('test')">Add slide</button>
     <button (click)="toggleNavigation()">Toggle navigation</button>
     <button (click)="toggleScrollbar()">Toggle scrollbar</button>
-    <button (click)="breakpointChange()">Breakpoint change</button>
     <button (click)="show = !show">Toggle show</button>
 
     <swiper [config]="exampleConfig">

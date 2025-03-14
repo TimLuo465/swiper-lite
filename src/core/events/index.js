@@ -5,14 +5,13 @@ import onTouchMove from './onTouchMove.js';
 import onTouchEnd from './onTouchEnd.js';
 import onResize from './onResize.js';
 import onClick from './onClick.js';
-import onScroll from './onScroll.js';
 
 let dummyEventAttached = false;
 function dummyEventListener() {}
 
 const events = (swiper, method) => {
   const document = getDocument();
-  const { params, touchEvents, el, wrapperEl, device, support } = swiper;
+  const { params, touchEvents, el, device, support } = swiper;
   const capture = !!params.nested;
   const domMethod = method === 'on' ? 'addEventListener' : 'removeEventListener';
   const swiperMethod = method;
@@ -42,9 +41,6 @@ const events = (swiper, method) => {
   if (params.preventClicks || params.preventClicksPropagation) {
     el[domMethod]('click', swiper.onClick, true);
   }
-  if (params.cssMode) {
-    wrapperEl[domMethod]('scroll', swiper.onScroll);
-  }
 
   // Resize handler
   if (params.updateOnWindowResize) {
@@ -63,15 +59,11 @@ const events = (swiper, method) => {
 function attachEvents() {
   const swiper = this;
   const document = getDocument();
-  const { params, support } = swiper;
+  const { support } = swiper;
 
   swiper.onTouchStart = onTouchStart.bind(swiper);
   swiper.onTouchMove = onTouchMove.bind(swiper);
   swiper.onTouchEnd = onTouchEnd.bind(swiper);
-
-  if (params.cssMode) {
-    swiper.onScroll = onScroll.bind(swiper);
-  }
 
   swiper.onClick = onClick.bind(swiper);
 

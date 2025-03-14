@@ -29,8 +29,6 @@ export default function addClasses() {
     { 'grid-column': params.grid && params.grid.rows > 1 && params.grid.fill === 'column' },
     { 'android': device.android },
     { 'ios': device.ios },
-    { 'css-mode': params.cssMode },
-    { 'centered': params.cssMode && params.centeredSlides },
     { 'watch-progress': params.watchSlidesProgress },
   ], params.containerModifierClass);
   classNames.push(...suffixes);

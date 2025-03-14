@@ -88,9 +88,4 @@ export default function HashNavigation({ swiper, extendParams, emit, on }) {
       setHash();
     }
   });
-  on('slideChange', () => {
-    if (initialized && swiper.params.cssMode) {
-      setHash();
-    }
-  });
 }

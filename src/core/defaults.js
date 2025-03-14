@@ -4,11 +4,9 @@ export default {
   touchEventsTarget: 'wrapper',
   initialSlide: 0,
   speed: 300,
-  cssMode: false,
   updateOnWindowResize: true,
   resizeObserver: true,
   nested: false,
-  createElements: false,
   enabled: true,
   focusableElements: 'input, select, option, textarea, button, video, label',
 
@@ -38,10 +36,6 @@ export default {
 
   // Effects
   effect: 'slide', // 'slide' or 'fade' or 'cube' or 'coverflow' or 'flip'
-
-  // Breakpoints
-  breakpoints: undefined,
-  breakpointsBase: 'window',
 
   // Slides grid
   spaceBetween: 0,

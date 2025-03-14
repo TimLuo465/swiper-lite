@@ -1,5 +1,3 @@
-import { animateCSSModeScroll } from '../../shared/utils.js';
-
 export default function slideTo(
   index = 0,
   speed = this.params.speed,
@@ -49,7 +47,6 @@ export default function slideTo(
     previousIndex,
     activeIndex,
     rtlTranslate: rtl,
-    wrapperEl,
     enabled,
   } = swiper;
 
@@ -135,34 +132,6 @@ export default function slideTo(
       swiper.transitionEnd(runCallbacks, direction);
     }
     return false;
-  }
-  if (params.cssMode) {
-    const isH = swiper.isHorizontal();
-    const t = rtl ? translate : -translate;
-    if (speed === 0) {
-      const isVirtual = swiper.virtual && swiper.params.virtual.enabled;
-      if (isVirtual) {
-        swiper.wrapperEl.style.scrollSnapType = 'none';
-        swiper._immediateVirtual = true;
-      }
-      wrapperEl[isH ? 'scrollLeft' : 'scrollTop'] = t;
-      if (isVirtual) {
-        requestAnimationFrame(() => {
-          swiper.wrapperEl.style.scrollSnapType = '';
-          swiper._swiperImmediateVirtual = false;
-        });
-      }
-    } else {
-      if (!swiper.support.smoothScroll) {
-        animateCSSModeScroll({ swiper, targetPosition: t, side: isH ? 'left' : 'top' });
-        return true;
-      }
-      wrapperEl.scrollTo({
-        [isH ? 'left' : 'top']: t,
-        behavior: 'smooth',
-      });
-    }
-    return true;
   }
 
   swiper.setTransition(speed);

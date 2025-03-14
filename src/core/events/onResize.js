@@ -5,11 +5,6 @@ export default function onResize() {
 
   if (el && el.offsetWidth === 0) return;
 
-  // Breakpoints
-  if (params.breakpoints) {
-    swiper.setBreakpoint();
-  }
-
   // Save locks
   const { allowSlideNext, allowSlidePrev, snapGrid } = swiper;
 

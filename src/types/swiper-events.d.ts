@@ -210,16 +210,6 @@ export interface SwiperEvents {
   loopFix: (swiper: Swiper) => void;
 
   /**
-   * Event will be fired on breakpoint change
-   */
-  breakpoint: (swiper: Swiper, breakpointParams: SwiperOptions) => void;
-
-  /**
-   * !INTERNAL: Event will fired right before breakpoint change
-   */
-  _beforeBreakpoint?: (swiper: Swiper, breakpointParams: SwiperOptions) => void;
-
-  /**
    * !INTERNAL: Event will fired after setting CSS classes on swiper container element
    */
   _containerClasses?: (swiper: Swiper, classNames: string) => void;

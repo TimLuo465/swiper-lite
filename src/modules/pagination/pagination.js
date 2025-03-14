@@ -1,6 +1,5 @@
 import $ from '../../shared/dom.js';
 import classesToSelector from '../../shared/classes-to-selector.js';
-import createElementIfNotDefined from '../../shared/create-element-if-not-defined.js';
 
 export default function Pagination({ swiper, extendParams, on, emit }) {
   const pfx = 'swiper-pagination';
@@ -273,12 +272,6 @@ export default function Pagination({ swiper, extendParams, on, emit }) {
     }
   }
   function init() {
-    swiper.params.pagination = createElementIfNotDefined(
-      swiper,
-      swiper.originalParams.pagination,
-      swiper.params.pagination,
-      { el: 'swiper-pagination' },
-    );
     const params = swiper.params.pagination;
     if (!params.el) return;
 

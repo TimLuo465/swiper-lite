@@ -419,21 +419,6 @@ interface Swiper extends SwiperClass<SwiperEvents> {
   /**
    * !INTERNAL
    */
-  getBreakpoint(breakpoints: SwiperOptions['breakpoints']): string;
-
-  /**
-   * !INTERNAL
-   */
-  setBreakpoint(): void;
-
-  /**
-   * !INTERNAL
-   */
-  currentBreakpoint: any;
-
-  /**
-   * !INTERNAL
-   */
   destroyed: boolean;
 
   /**

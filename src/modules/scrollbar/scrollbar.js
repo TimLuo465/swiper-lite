@@ -1,7 +1,6 @@
 import { getDocument } from 'ssr-window';
 import $ from '../../shared/dom.js';
 import { nextTick } from '../../shared/utils.js';
-import createElementIfNotDefined from '../../shared/create-element-if-not-defined.js';
 
 export default function Scrollbar({ swiper, extendParams, on, emit }) {
   const document = getDocument();
@@ -176,9 +175,6 @@ export default function Scrollbar({ swiper, extendParams, on, emit }) {
     if (params.hide) {
       $el.css('opacity', 1);
     }
-    if (swiper.params.cssMode) {
-      swiper.$wrapperEl.css('scroll-snap-type', 'none');
-    }
     emit('scrollbarDragStart', e);
   }
   function onDragMove(e) {
@@ -196,15 +192,11 @@ export default function Scrollbar({ swiper, extendParams, on, emit }) {
   }
   function onDragEnd(e) {
     const params = swiper.params.scrollbar;
-    const { scrollbar, $wrapperEl } = swiper;
+    const { scrollbar } = swiper;
     const { $el } = scrollbar;
 
     if (!isTouched) return;
     isTouched = false;
-    if (swiper.params.cssMode) {
-      swiper.$wrapperEl.css('scroll-snap-type', '');
-      $wrapperEl.transition('');
-    }
     if (params.hide) {
       clearTimeout(dragTimeout);
       dragTimeout = nextTick(() => {
@@ -254,12 +246,6 @@ export default function Scrollbar({ swiper, extendParams, on, emit }) {
   }
   function init() {
     const { scrollbar, $el: $swiperEl } = swiper;
-    swiper.params.scrollbar = createElementIfNotDefined(
-      swiper,
-      swiper.originalParams.scrollbar,
-      swiper.params.scrollbar,
-      { el: 'swiper-scrollbar' },
-    );
     const params = swiper.params.scrollbar;
     if (!params.el) return;
 

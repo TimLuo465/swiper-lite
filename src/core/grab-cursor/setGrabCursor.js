@@ -3,8 +3,7 @@ export default function setGrabCursor(moving) {
   if (
     swiper.support.touch ||
     !swiper.params.simulateTouch ||
-    (swiper.params.watchOverflow && swiper.isLocked) ||
-    swiper.params.cssMode
+    (swiper.params.watchOverflow && swiper.isLocked)
   )
     return;
   const el = swiper.params.touchEventsTarget === 'container' ? swiper.el : swiper.wrapperEl;

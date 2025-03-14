@@ -56,7 +56,7 @@ export default function EffectFlip({ swiper, extendParams, on }) {
       const rotate = -180 * progress;
       let rotateY = rotate;
       let rotateX = 0;
-      let tx = swiper.params.cssMode ? -offset - swiper.translate : -offset;
+      let tx = -offset;
       let ty = 0;
       if (!swiper.isHorizontal()) {
         ty = tx;
@@ -104,7 +104,7 @@ export default function EffectFlip({ swiper, extendParams, on }) {
       slidesPerGroup: 1,
       watchSlidesProgress: true,
       spaceBetween: 0,
-      virtualTranslate: !swiper.params.cssMode,
+      virtualTranslate: true,
     }),
   });
 }

@@ -149,15 +149,6 @@ export interface SwiperOptions {
   nested?: boolean;
 
   /**
-   * When enabled Swiper will automatically wrap slides with swiper-wrapper element,
-   * and will create required elements for navigation, pagination and scrollbar
-   * they are enabled (with their respective params object or with boolean `true`))
-   *
-   * @default false
-   */
-  createElements?: boolean;
-
-  /**
    * CSS selector for focusable elements. Swiping will be disabled on such elements if they are "focused"
    *
    * @default 'input, select, option, textarea, button, video, label'
@@ -231,26 +222,6 @@ export interface SwiperOptions {
    * ```
    */
   onAny?(handler: (eventName: string, ...args: any[]) => void): void;
-
-  /**
-   * When enabled it will use modern CSS Scroll Snap API.
-   * It doesn't support all of Swiper's features, but potentially should bring a much better performance in simple configurations.
-   *
-   * This is what is not supported when it is enabled:
-   *
-   * - Cube and Cards effects
-   * - `speed` parameter may not have no effect
-   * - All transition start/end related events (use `slideChange` instead)
-   * - `slidesPerGroup` has limited support
-   * - `simulateTouch` doesn't have effect and "dragging" with mouse doesn't work
-   * - `resistance` doesn't have any effect
-   * - `allowSlidePrev/Next`
-   * - `swipeHandler`
-   * - `freeMode` and all relevant features
-   *
-   * @default false
-   */
-  cssMode?: boolean;
 
   // Slides grid
 
@@ -651,73 +622,6 @@ export interface SwiperOptions {
    * @default true
    */
   loopPreventsSlide?: boolean;
-
-  /**
-   * Allows to set different parameter for different responsive breakpoints (screen sizes). Not all parameters can be changed in breakpoints, only those which do not require different layout and logic, like `slidesPerView`, `slidesPerGroup`, `spaceBetween`, `grid.rows`. Such parameters like `loop` and `effect` won't work
-   *
-   * @example
-   * ```js
-   * const swiper = new Swiper('.swiper', {
-   *   // Default parameters
-   *   slidesPerView: 1,
-   *   spaceBetween: 10,
-   *   // Responsive breakpoints
-   *   breakpoints: {
-   *     // when window width is >= 320px
-   *     320: {
-   *       slidesPerView: 2,
-   *       spaceBetween: 20
-   *     },
-   *     // when window width is >= 480px
-   *     480: {
-   *       slidesPerView: 3,
-   *       spaceBetween: 30
-   *     },
-   *     // when window width is >= 640px
-   *     640: {
-   *       slidesPerView: 4,
-   *       spaceBetween: 40
-   *     }
-   *   }
-   * })
-   * ```
-   *
-   * @example
-   * ```js
-   * const swiper = new Swiper('.swiper', {
-   *   slidesPerView: 1,
-   *   spaceBetween: 10,
-   *   // using "ratio" endpoints
-   *   breakpoints: {
-   *     '@0.75': {
-   *       slidesPerView: 2,
-   *       spaceBetween: 20,
-   *     },
-   *     '@1.00': {
-   *       slidesPerView: 3,
-   *       spaceBetween: 40,
-   *     },
-   *     '@1.50': {
-   *       slidesPerView: 4,
-   *       spaceBetween: 50,
-   *     },
-   *   }
-   * });
-   * ```
-   */
-  breakpoints?: {
-    [width: number]: SwiperOptions;
-    [ratio: string]: SwiperOptions;
-  };
-
-  /**
-   * Base for breakpoints (beta). Can be `window` or `container`. If set to `window` (by default) then breakpoint keys mean window width. If set to `container` then breakpoint keys treated as swiper container width
-   *
-   * @default 'window'
-   *
-   * @note Currently in beta and not supported by Swiper Angular, React, Svelte and Vue components
-   */
-  breakpointsBase?: string;
 
   // Observer
   /**

@@ -112,7 +112,7 @@ export default function onTouchMove(event) {
     return;
   }
   swiper.allowClick = false;
-  if (!params.cssMode && e.cancelable) {
+  if (e.cancelable) {
     e.preventDefault();
   }
   if (params.touchMoveStopPropagation && !params.nested) {
@@ -120,7 +120,7 @@ export default function onTouchMove(event) {
   }
 
   if (!data.isMoved) {
-    if (params.loop && !params.cssMode) {
+    if (params.loop) {
       swiper.loopFix();
     }
     data.startTranslate = swiper.getTranslate();
@@ -210,7 +210,7 @@ export default function onTouchMove(event) {
     }
   }
 
-  if (!params.followFinger || params.cssMode) return;
+  if (!params.followFinger) return;
 
   // Update active index in free mode
   if (

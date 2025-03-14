@@ -28,9 +28,6 @@ export default function onTouchStart(event) {
   if (swiper.animating && params.preventInteractionOnTransition) {
     return;
   }
-  if (!swiper.animating && params.cssMode && params.loop) {
-    swiper.loopFix();
-  }
   let e = event;
   if (e.originalEvent) e = e.originalEvent;
   let $targetEl = $(e.target);
@@ -135,8 +132,7 @@ export default function onTouchStart(event) {
     swiper.params.freeMode &&
     swiper.params.freeMode.enabled &&
     swiper.freeMode &&
-    swiper.animating &&
-    !params.cssMode
+    swiper.animating
   ) {
     swiper.freeMode.onTouchStart();
   }

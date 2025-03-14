@@ -20,10 +20,7 @@ export default function updateSlidesProgress(translate = (this && this.translate
 
   for (let i = 0; i < slides.length; i += 1) {
     const slide = slides[i];
-    let slideOffset = slide.swiperSlideOffset;
-    if (params.cssMode && params.centeredSlides) {
-      slideOffset -= slides[0].swiperSlideOffset;
-    }
+    const slideOffset = slide.swiperSlideOffset;
 
     const slideProgress =
       (offsetCenter + (params.centeredSlides ? swiper.minTranslate() : 0) - slideOffset) /

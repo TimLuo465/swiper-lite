@@ -131,9 +131,4 @@ export default function History({ swiper, extendParams, on }) {
       setHistory(swiper.params.history.key, swiper.activeIndex);
     }
   });
-  on('slideChange', () => {
-    if (initialized && swiper.params.cssMode) {
-      setHistory(swiper.params.history.key, swiper.activeIndex);
-    }
-  });
 }

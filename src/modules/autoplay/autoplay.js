@@ -69,8 +69,7 @@ export default function Autoplay({ swiper, extendParams, on, emit }) {
       } else {
         stop();
       }
-      if (swiper.params.cssMode && swiper.autoplay.running) run();
-      else if (autoplayResult === false) {
+      if (autoplayResult === false) {
         run();
       }
     }, delay);
@@ -187,15 +186,6 @@ export default function Autoplay({ swiper, extendParams, on, emit }) {
       } else {
         pause();
       }
-    }
-  });
-  on('touchEnd', () => {
-    if (
-      swiper.params.cssMode &&
-      swiper.autoplay.paused &&
-      !swiper.params.autoplay.disableOnInteraction
-    ) {
-      run();
     }
   });
   on('destroy', () => {

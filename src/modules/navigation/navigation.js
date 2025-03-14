@@ -1,4 +1,3 @@
-import createElementIfNotDefined from '../../shared/create-element-if-not-defined.js';
 import $ from '../../shared/dom.js';
 
 export default function Navigation({ swiper, extendParams, on, emit }) {
@@ -71,15 +70,6 @@ export default function Navigation({ swiper, extendParams, on, emit }) {
   function init() {
     const params = swiper.params.navigation;
 
-    swiper.params.navigation = createElementIfNotDefined(
-      swiper,
-      swiper.originalParams.navigation,
-      swiper.params.navigation,
-      {
-        nextEl: 'swiper-button-next',
-        prevEl: 'swiper-button-prev',
-      },
-    );
     if (!(params.nextEl || params.prevEl)) return;
 
     const $nextEl = getEl(params.nextEl);

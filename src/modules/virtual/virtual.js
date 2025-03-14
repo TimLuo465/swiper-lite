@@ -1,5 +1,4 @@
 import $ from '../../shared/dom.js';
-import { setCSSProperty } from '../../shared/utils.js';
 
 export default function Virtual({ swiper, extendParams, on, emit }) {
   extendParams({
@@ -14,8 +13,6 @@ export default function Virtual({ swiper, extendParams, on, emit }) {
       addSlidesAfter: 0,
     },
   });
-
-  let cssModeTimeout;
 
   swiper.virtual = {
     cache: {},
@@ -51,9 +48,7 @@ export default function Virtual({ swiper, extendParams, on, emit }) {
       slidesGrid: previousSlidesGrid,
       offset: previousOffset,
     } = swiper.virtual;
-    if (!swiper.params.cssMode) {
-      swiper.updateActiveIndex();
-    }
+    swiper.updateActiveIndex();
 
     const activeIndex = swiper.activeIndex || 0;
 
@@ -243,20 +238,7 @@ export default function Virtual({ swiper, extendParams, on, emit }) {
   });
   on('setTranslate', () => {
     if (!swiper.params.virtual.enabled) return;
-    if (swiper.params.cssMode && !swiper._immediateVirtual) {
-      clearTimeout(cssModeTimeout);
-      cssModeTimeout = setTimeout(() => {
-        update();
-      }, 100);
-    } else {
-      update();
-    }
-  });
-  on('init update resize', () => {
-    if (!swiper.params.virtual.enabled) return;
-    if (swiper.params.cssMode) {
-      setCSSProperty(swiper.wrapperEl, '--swiper-virtual-size', `${swiper.virtualSize}px`);
-    }
+    update();
   });
 
   Object.assign(swiper.virtual, {

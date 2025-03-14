@@ -33,7 +33,6 @@ const Swiper = forwardRef(
     let eventsAssigned = false;
     const [containerClasses, setContainerClasses] = useState('swiper');
     const [virtualData, setVirtualData] = useState(null);
-    const [breakpointChanged, setBreakpointChanged] = useState(false);
     const initializedRef = useRef(false);
     const swiperElRef = useRef(null);
     const swiperRef = useRef(null);
@@ -48,10 +47,6 @@ const Swiper = forwardRef(
     const { params: swiperParams, passedParams, rest: restProps, events } = getParams(rest);
 
     const { slides, slots } = getChildren(children);
-
-    const onBeforeBreakpoint = () => {
-      setBreakpointChanged(!breakpointChanged);
-    };
 
     Object.assign(swiperParams.on, {
       _containerClasses(swiper, classes) {
@@ -86,11 +81,6 @@ const Swiper = forwardRef(
       initSwiper();
     }
 
-    // Listen for breakpoints change
-    if (swiperRef.current) {
-      swiperRef.current.on('_beforeBreakpoint', onBeforeBreakpoint);
-    }
-
     const attachEvents = () => {
       if (eventsAssigned || !events || !swiperRef.current) return;
       Object.keys(events).forEach((eventName) => {
@@ -104,12 +94,6 @@ const Swiper = forwardRef(
         swiperRef.current.off(eventName, events[eventName]);
       });
     };
-
-    useEffect(() => {
-      return () => {
-        if (swiperRef.current) swiperRef.current.off('_beforeBreakpoint', onBeforeBreakpoint);
-      };
-    });
 
     // set initialized flag
     useEffect(() => {

@@ -1,5 +1,3 @@
-import { setCSSProperty } from '../../shared/utils.js';
-
 export default function updateSlides() {
   const swiper = this;
   function getDirectionLabel(property) {
@@ -63,12 +61,6 @@ export default function updateSlides() {
   if (rtl) slides.css({ marginLeft: '', marginBottom: '', marginTop: '' });
   else slides.css({ marginRight: '', marginBottom: '', marginTop: '' });
 
-  // reset cssMode offsets
-  if (params.centeredSlides && params.cssMode) {
-    setCSSProperty(swiper.wrapperEl, '--swiper-centered-offset-before', '');
-    setCSSProperty(swiper.wrapperEl, '--swiper-centered-offset-after', '');
-  }
-
   const gridEnabled = params.grid && params.grid.rows > 1 && swiper.grid;
   if (gridEnabled) {
     swiper.grid.initSlides(slidesLength);
@@ -76,13 +68,6 @@ export default function updateSlides() {
 
   // Calc slides
   let slideSize;
-
-  const shouldResetSlideSize =
-    params.slidesPerView === 'auto' &&
-    params.breakpoints &&
-    Object.keys(params.breakpoints).filter((key) => {
-      return typeof params.breakpoints[key].slidesPerView !== 'undefined';
-    }).length > 0;
 
   for (let i = 0; i < slidesLength; i += 1) {
     slideSize = 0;
@@ -93,9 +78,6 @@ export default function updateSlides() {
     if (slide.css('display') === 'none') continue; // eslint-disable-line
 
     if (params.slidesPerView === 'auto') {
-      if (shouldResetSlideSize) {
-        slides[i].style[getDirectionLabel('width')] = ``;
-      }
       const slideStyles = getComputedStyle(slide[0]);
       const currentTransform = slide[0].style.transform;
       const currentWebKitTransform = slide[0].style.webkitTransform;
@@ -213,15 +195,7 @@ export default function updateSlides() {
 
   if (params.spaceBetween !== 0) {
     const key = swiper.isHorizontal() && rtl ? 'marginLeft' : getDirectionLabel('marginRight');
-    slides
-      .filter((_, slideIndex) => {
-        if (!params.cssMode) return true;
-        if (slideIndex === slides.length - 1) {
-          return false;
-        }
-        return true;
-      })
-      .css({ [key]: `${spaceBetween}px` });
+    slides.css({ [key]: `${spaceBetween}px` });
   }
 
   if (params.centeredSlides && params.centeredSlidesBounds) {
@@ -262,19 +236,6 @@ export default function updateSlides() {
     slidesSizesGrid,
   });
 
-  if (params.centeredSlides && params.cssMode && !params.centeredSlidesBounds) {
-    setCSSProperty(swiper.wrapperEl, '--swiper-centered-offset-before', `${-snapGrid[0]}px`);
-    setCSSProperty(
-      swiper.wrapperEl,
-      '--swiper-centered-offset-after',
-      `${swiper.size / 2 - slidesSizesGrid[slidesSizesGrid.length - 1] / 2}px`,
-    );
-    const addToSnapGrid = -swiper.snapGrid[0];
-    const addToSlidesGrid = -swiper.slidesGrid[0];
-    swiper.snapGrid = swiper.snapGrid.map((v) => v + addToSnapGrid);
-    swiper.slidesGrid = swiper.slidesGrid.map((v) => v + addToSlidesGrid);
-  }
-
   if (slidesLength !== previousSlidesLength) {
     swiper.emit('slidesLengthChange');
   }
@@ -290,7 +251,7 @@ export default function updateSlides() {
     swiper.updateSlidesOffset();
   }
 
-  if (!isVirtual && !params.cssMode && (params.effect === 'slide' || params.effect === 'fade')) {
+  if (!isVirtual && (params.effect === 'slide' || params.effect === 'fade')) {
     const backFaceHiddenClass = `${params.containerModifierClass}backface-hidden`;
     const hasClassBackfaceClassAdded = swiper.$el.hasClass(backFaceHiddenClass);
     if (slidesLength <= params.maxBackfaceHiddenSlides) {
