@@ -11,13 +11,7 @@ const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 export default async function buildTypes() {
   elapsed.start('types');
   let coreEventsReact = '';
-  let coreEventsSolid = '';
-  let coreEventsVue = '';
-  let coreEventsSvelte = '';
   let modulesEventsReact = '';
-  let modulesEventsSolid = '';
-  let modulesEventsVue = '';
-  let modulesEventsSvelte = '';
 
   const replaceInstances = (content) => {
     return content
@@ -38,24 +32,6 @@ export default async function buildTypes() {
         return ` on${name[0].toUpperCase()}${name.substr(1)}?: (`;
       }),
     );
-    coreEventsSolid = replaceInstances(
-      coreEventsContent.replace(/ ([a-zA-Z]*): \(/g, (string, name) => {
-        return ` on${name[0].toUpperCase()}${name.substr(1)}?: (`;
-      }),
-    );
-    coreEventsVue = replaceInstances(
-      coreEventsContent.replace(/ ([a-zA-Z_?]*): \(/g, (string, name) => {
-        return ` ${name.replace('?', '')}: (`;
-      }),
-    );
-    coreEventsSvelte = replaceInstances(
-      coreEventsContent
-        .replace(/ ([a-zA-Z_?]*): \(/g, (string, name) => {
-          return ` ${name.replace('?', '')}: CustomEvent<[`;
-        })
-        .replace(/\) => void;/g, ']>;')
-        .replace(/\) => any;/g, ']>;'),
-    );
   };
   const getModulesEventsContent = async () => {
     const eventsFiles = await globby('src/types/modules/*.d.ts');
@@ -71,24 +47,6 @@ export default async function buildTypes() {
             eventsContent.replace(/ ([a-zA-Z]*): \(/g, (string, name) => {
               return ` on${name[0].toUpperCase()}${name.substr(1)}?: (`;
             }),
-          );
-          modulesEventsSolid += replaceInstances(
-            eventsContent.replace(/ ([a-zA-Z]*): \(/g, (string, name) => {
-              return ` on${name[0].toUpperCase()}${name.substr(1)}?: (`;
-            }),
-          );
-          modulesEventsVue += replaceInstances(
-            eventsContent.replace(/ ([a-zA-Z_?]*): \(/g, (string, name) => {
-              return ` ${name.replace('?', '')}: (`;
-            }),
-          );
-          modulesEventsSvelte += replaceInstances(
-            eventsContent
-              .replace(/ ([a-zA-Z_?]*): \(/g, (string, name) => {
-                return ` ${name.replace('?', '')}: CustomEvent<[`;
-              })
-              .replace(/\) => void;/g, ']>;')
-              .replace(/\) => any;/g, ']>;'),
           );
         }
       }),
@@ -117,15 +75,6 @@ export default async function buildTypes() {
       };
       if (file.includes('swiper-react.d.ts')) {
         return processTypingFile(coreEventsReact, modulesEventsReact);
-      }
-      if (file.includes('swiper-solid.d.ts')) {
-        return processTypingFile(coreEventsSolid, modulesEventsSolid);
-      }
-      if (file.includes('swiper-vue.d.ts')) {
-        return processTypingFile(coreEventsVue, modulesEventsVue);
-      }
-      if (file.includes('swiper-svelte.d.ts')) {
-        return processTypingFile(coreEventsSvelte, modulesEventsSvelte);
       }
       return fs.writeFile(destPath, fileContent);
     }),
